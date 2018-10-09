@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -66,7 +67,6 @@ func (cli *CLI) Version() string {
 	return config.Version()
 }
 
-/*
 // Run parses command line arguments and processes commands
 func (cli *CLI) Run() {
 
@@ -216,4 +216,3 @@ func (cli *CLI) Run() {
 	}
 
 }
-*/

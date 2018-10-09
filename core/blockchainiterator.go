@@ -1,8 +1,9 @@
 package core
 
 import (
-	"github.com/boltdb/bolt"
 	"log"
+
+	"github.com/boltdb/bolt"
 )
 
 type BlockchainIterator struct {
