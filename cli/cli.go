@@ -6,8 +6,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/NlaakStudios/Blockchain/utils"
+
 	"github.com/NlaakStudios/Blockchain/config"
-	"github.com/joho/godotenv"
 	//"os"
 )
 
@@ -20,8 +21,8 @@ type CLI struct {
 //printUsage diplay commandline usage information to the user.
 func (cli *CLI) printUsage() {
 	fmt.Println("")
-	fmt.Println("Global Wealth & Freedom Daemon Version", config.Version())
-	fmt.Println("Nlaak Studios (www.nlaak.com)")
+	fmt.Printf("%s Daemon Version %s\n", config.CoinName, config.Version())
+	fmt.Printf("%s (%s)\n", config.CoinCompany, config.CoinLandingPage)
 	fmt.Println("-----------------------------------------------------------------------------------------")
 	fmt.Println("Usage:")
 	fmt.Println("	createblockchain -address ADDRESS - Create a blockchain and send genesis block reward to ADDRESS")
@@ -46,21 +47,7 @@ func (cli *CLI) validateArgs() {
 
 //Initialize initialiaes the blockchain
 func (cli *CLI) Initialize() {
-	//Load settings from enviroment file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	//Defaul node port (CONST)
-	cli.NodePort = config.NodePort
-
-	//Get NodePort override from .enc config (optional)
-	envNodePort := os.Getenv("NODE_PORT")
-	if envNodePort != "" && envNodePort != cli.NodePort {
-		fmt.Printf("Overriding default Node port %s with .env value of %s", string(config.NodePort), envNodePort)
-		//os.Exit(1)
-	}
 }
 
 func (cli *CLI) Version() string {
@@ -69,25 +56,24 @@ func (cli *CLI) Version() string {
 
 // Run parses command line arguments and processes commands
 func (cli *CLI) Run() {
+	//Defaul node port (CONST)
+	cli.NodePort = config.NodePort
+	utils.CreateDirIfNotExist("data")
+
+	//See if blockchain file exists including data folder. If not crete folder, display notice
+	walletsFile := fmt.Sprintf(config.FilePathWallets, config.NodePort)
+	if _, err := os.Stat(walletsFile); os.IsNotExist(err) {
+		println("Wallets file does not exist, use `blockchain createwallet` to create at least one wallet")
+	}
+
+	//See if blockchain file exists including data folder. If not crete folder, display notice
+	blockchainFile := fmt.Sprintf(config.FilePathBlockchain, config.NodePort)
+	if _, err := os.Stat(blockchainFile); os.IsNotExist(err) {
+		println("Blockchain does not exist, use `blockchain createblockchain` to create one")
+	}
 
 	//Validate the command line arguments
 	cli.validateArgs()
-
-	//Load settings from enviroment file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	//Defaul node port (CONST)
-	cli.NodePort = config.NodePort
-
-	//Get NodePort override from .enc config (optional)
-	envNodePort := os.Getenv("NODE_PORT")
-	if envNodePort != "" && envNodePort != cli.NodePort {
-		fmt.Printf("Overriding default Node port %s with .env value of %s", string(config.NodePort), envNodePort)
-		//os.Exit(1)
-	}
 
 	getBalanceCmd := flag.NewFlagSet("getbalance", flag.ExitOnError)
 	createBlockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)

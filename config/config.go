@@ -43,22 +43,22 @@ const (
 	CoinDecimals    = 10
 	//CoinLandingPage is the URL to your landing page (We handle this)
 	//format: https://www/gwf.io/ico/{CoinSymbol}/
-	CoinLandingPage = "https://www/gwf.io/ico/%s"
+	CoinLandingPage = "https://www.gwf.io/"
 	//CoinWhitePapere is the URL to your whitepaper (We handle this)
 	//format: https://www/gwf.io/ico/{CoinSymbol}/
-	CoinWhitePaper = "https://www/gwf.io/ico/%s/whitepaper"
+	CoinWhitePaper = "https://www.gwf.io/ico/%s/whitepaper"
 	//CoinDashboardPage is the URL to your users dashboard page (We handle this)
 	//format: https://www/gwf.io/ico/{CoinSymbol}/dashboard
-	CoinDashboardPage = "https://www/gwf.io/ico/%s/dashboard"
+	CoinDashboardPage = "https://www.gwf.io/ico/%s/dashboard"
 	//CoinAPI is the URL to your API endpoints (We handle this)
 	//format: https://www/gwf.io/ico/api/{CoinSymbol}/{EndPoint}
-	CoinAPI = "https://www/gwf.io/ico/api/%s/%s"
+	CoinAPI = "https://www.gwf.io/ico/api/%s/%s"
 	//FilePathBlockchain is the complete path to the ICO's blockchain database
-	//Format: data/ico/{CoinSymbol}/blockchain-{CoinPort}.db
-	FilePathBlockchain = "data/ico/%s/blockchain-%s.db"
+	//Format: data/blockchain-{CoinPort}.db
+	FilePathBlockchain = "./data/blockchain-%s.db"
 	//FilePathWallets is the complete path to the ICO's wallets file
-	//Format: data/ico/{CoinSymbol}/wallets-{CoinPort}.dat
-	FilePathWallets = "data/ico/%s/wallets-%s.dat"
+	//Format: data/wallets-{CoinPort}.dat
+	FilePathWallets = "./data/wallets-%s.dat"
 )
 
 //*********************************************************************

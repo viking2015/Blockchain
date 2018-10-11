@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/NlaakStudios/Blockchain/config"
 	"github.com/boltdb/bolt"
 )
 
@@ -25,7 +26,7 @@ type AccountsDB struct {
 
 //AccountsDBExists ...
 func AccountsDBExists(nodeID string, halt bool, failedMessage string) {
-	dbFile := fmt.Sprintf(dbFile, nodeID)
+	dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
 	if dbExists(dbFile) == false {
 		fmt.Println(failedMessage)
 		if halt == true {

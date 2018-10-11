@@ -9,10 +9,11 @@ import (
 	"log"
 	"os"
 
+	"github.com/NlaakStudios/Blockchain/config"
 	"github.com/boltdb/bolt"
 )
 
-const dbFile = "./data/Blockchain_%s.db"
+//const dbFile = "./data/Blockchain_%s.db"
 const blocksBucket = "blocks"
 const genesisCoinbaseData = "Global Wealth & Freedom Genesis block."
 
@@ -24,7 +25,7 @@ type Blockchain struct {
 
 // CreateBlockchain creates a new blockchain DB
 func CreateBlockchain(address, nodeID string) *Blockchain {
-	dbFile := fmt.Sprintf(dbFile, nodeID)
+	dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
 	if dbExists(dbFile) {
 		fmt.Println("Blockchain already exists.")
 		os.Exit(1)
@@ -71,7 +72,8 @@ func CreateBlockchain(address, nodeID string) *Blockchain {
 
 // NewBlockchain creates a new Blockchain with genesis Block
 func NewBlockchain(nodeID string) *Blockchain {
-	dbFile := fmt.Sprintf(dbFile, nodeID)
+	dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
+
 	if dbExists(dbFile) == false {
 		fmt.Println("No existing blockchain found. Create one first.")
 		os.Exit(1)
