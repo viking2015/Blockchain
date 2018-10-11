@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/NlaakStudios/Blockchain/config"
 	"github.com/NlaakStudios/Blockchain/core"
 	"github.com/NlaakStudios/Blockchain/utils"
 )
 
-//ShowBalance show the balance of the given wallet
+//ShowBalance shows the balance of the given wallet in the console
 func (cli *CLI) ShowBalance(address string) {
 	if !core.ValidateAddress(address) {
 		log.Panic("ERROR: Address is not valid")
@@ -26,9 +27,10 @@ func (cli *CLI) ShowBalance(address string) {
 		balance += out.Value
 	}
 
-	fmt.Printf("Balance of '%s': %d\n", address, balance)
+	fmt.Printf("Balance of '%s': %d %s\n", address, balance, config.CoinSymbol)
 }
 
+// GetBalance given a valid address returns the current balance in coins
 func (cli *CLI) GetBalance(address string) int {
 
 	//fmt.Println("getBalance(%s, %s)", address, nodeID)

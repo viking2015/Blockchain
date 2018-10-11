@@ -18,8 +18,6 @@ const addressChecksumLen = 4
 
 // Wallet stores private and public keys
 type Wallet struct {
-	UserID     uint64 //Just Added
-	label      string //Just Added
 	PrivateKey ecdsa.PrivateKey
 	PublicKey  []byte
 }
@@ -27,17 +25,7 @@ type Wallet struct {
 // NewWallet creates and returns a Wallet
 func NewWallet() *Wallet {
 	private, public := newKeyPair()
-	//wallet := Wallet{private, public}
-	wallet := Wallet{0, "", private, public}
-
-	return &wallet
-}
-
-// NewWalletFull creates a wallet address and assigns the passed in userid and label and returns it
-func NewWalletFull(userid uint64, label string) *Wallet {
-	private, public := newKeyPair()
-	//wallet := Wallet{private, public}
-	wallet := Wallet{userid, label, private, public}
+	wallet := Wallet{private, public}
 
 	return &wallet
 }
