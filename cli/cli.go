@@ -45,11 +45,6 @@ func (cli *CLI) validateArgs() {
 	}
 }
 
-//Initialize initialiaes the blockchain
-func (cli *CLI) Initialize() {
-
-}
-
 func (cli *CLI) Version() string {
 	return config.Version()
 }
@@ -187,13 +182,6 @@ func (cli *CLI) Run() {
 	}
 
 	if startNodeCmd.Parsed() {
-
-		//	nodeID := os.Getenv("NODE_PORT")
-		//	if nodeID == "" {
-		//		startNodeCmd.Usage()
-		//		os.Exit(1)
-		//	}
-
 		cli.StartNode(cli.NodePort, *startNodeMiner)
 	}
 
