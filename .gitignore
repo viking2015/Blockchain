@@ -5,7 +5,7 @@
 *.so
 *.dylib
 .idea
-./data/blockchain/*
+data/blockchain/*
 *.exe
 
 # Test binary, build with `go test -c`
