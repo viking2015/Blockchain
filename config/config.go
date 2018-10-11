@@ -55,10 +55,10 @@ const (
 	CoinAPI = "https://www.gwf.io/ico/api/%s/%s"
 	//FilePathBlockchain is the complete path to the ICO's blockchain database
 	//Format: data/blockchain-{CoinPort}.db
-	FilePathBlockchain = "./data/blockchain-%s.db"
+	FilePathBlockchain = "./data/blockchain/blockchain-%s.db"
 	//FilePathWallets is the complete path to the ICO's wallets file
 	//Format: data/wallets-{CoinPort}.dat
-	FilePathWallets = "./data/wallets-%s.dat"
+	FilePathWallets = "./data/blockchain/wallets-%s.dat"
 )
 
 //*********************************************************************
