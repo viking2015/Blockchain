@@ -1,7 +1,5 @@
 package config
 
-//github.com/fatih/structs
-
 // Set these values for your ICO
 // TODO: Automate this through User Dashboard->Create ICO ?
 //Create ICO Page (www.gwf.io/createico)
@@ -53,12 +51,17 @@ const (
 	//CoinAPI is the URL to your API endpoints (We handle this)
 	//format: https://www/gwf.io/ico/api/{CoinSymbol}/{EndPoint}
 	CoinAPI = "https://www.gwf.io/ico/api/%s/%s"
+
+	//FilePathData is the complete path to the master data directory
+	//Format: data/blockchain-{CoinPort}.db
+	FilePathData = "../data"
+
 	//FilePathBlockchain is the complete path to the ICO's blockchain database
 	//Format: data/blockchain-{CoinPort}.db
-	FilePathBlockchain = "./data/blockchain/blockchain-%s.db"
+	FilePathBlockchain = "blockchain/blockchain-%s.db"
 	//FilePathWallets is the complete path to the ICO's wallets file
 	//Format: data/wallets-{CoinPort}.dat
-	FilePathWallets = "./data/blockchain/wallets-%s.dat"
+	FilePathWallets = "blockchain/wallets-%s.dat"
 )
 
 //*********************************************************************

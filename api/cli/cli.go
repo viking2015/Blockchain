@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/NlaakStudios/Blockchain/api/core"
+
 	"github.com/NlaakStudios/Blockchain/utils"
 
 	"github.com/NlaakStudios/Blockchain/config"
@@ -53,18 +55,18 @@ func (cli *CLI) Version() string {
 func (cli *CLI) Run() {
 	//Defaul node port (CONST)
 	cli.NodePort = config.NodePort
-	utils.CreateDirIfNotExist("data")
+	utils.CreateDirIfNotExist(config.FilePathData)
 
 	//See if blockchain file exists including data folder. If not crete folder, display notice
-	walletsFile := fmt.Sprintf(config.FilePathWallets, config.NodePort)
+	walletsFile := core.GetWalletsFile(cli.NodePort)
 	if _, err := os.Stat(walletsFile); os.IsNotExist(err) {
-		println("Wallets file does not exist, use `blockchain createwallet` to create at least one wallet")
+		println("Wallets file does not exist in ", walletsFile, ", use `blockchain createwallet` to create at least one wallet")
 	}
 
 	//See if blockchain file exists including data folder. If not crete folder, display notice
-	blockchainFile := fmt.Sprintf(config.FilePathBlockchain, config.NodePort)
+	blockchainFile := core.GetBlockChainFile(cli.NodePort)
 	if _, err := os.Stat(blockchainFile); os.IsNotExist(err) {
-		println("Blockchain does not exist, use `blockchain createblockchain` to create one")
+		println("Blockchain does not exist at ", blockchainFile, ", use `blockchain createblockchain` to create one")
 	}
 
 	//Validate the command line arguments
