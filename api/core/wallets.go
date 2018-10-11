@@ -19,6 +19,11 @@ type Wallets struct {
 	Wallets map[string]*Wallet
 }
 
+func GetWalletsFile(nodeID string) string {
+	str := fmt.Sprintf("%s/%s", config.FilePathData, config.FilePathWallets)
+	return fmt.Sprintf(str, nodeID)
+}
+
 // NewWallets creates Wallets and fills it from a file if it exists
 func NewWallets(nodeID string) (*Wallets, error) {
 	wallets := Wallets{}
@@ -57,12 +62,12 @@ func (ws Wallets) GetWallet(address string) Wallet {
 
 // LoadFromFile loads wallets from the file
 func (ws *Wallets) LoadFromFile(nodeID string) error {
-	walletFile := fmt.Sprintf(config.FilePathWallets, nodeID)
-	if _, err := os.Stat(walletFile); os.IsNotExist(err) {
+	dbFile := GetWalletsFile(nodeID)
+	if _, err := os.Stat(dbFile); os.IsNotExist(err) {
 		return err
 	}
 
-	fileContent, err := ioutil.ReadFile(walletFile)
+	fileContent, err := ioutil.ReadFile(dbFile)
 	if err != nil {
 		log.Panic(err)
 	}
