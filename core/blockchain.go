@@ -12,7 +12,7 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-const dbFile = "Blockchain_%s.db"
+const dbFile = "./data/Blockchain_%s.db"
 const blocksBucket = "blocks"
 const genesisCoinbaseData = "Global Wealth & Freedom Genesis block."
 
