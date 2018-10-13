@@ -12,13 +12,12 @@ import (
 	"github.com/NlaakStudios/Blockchain/config"
 )
 
-//const walletFile = "./data/Wallets_%s.dat"
-
 // Wallets stores a collection of wallets
 type Wallets struct {
 	Wallets map[string]*Wallet
 }
 
+// GetWalletsFile given a node port returns the full path to the wallets file
 func GetWalletsFile(nodeID string) string {
 	str := fmt.Sprintf("%s/%s", config.FilePathData, config.FilePathWallets)
 	return fmt.Sprintf(str, nodeID)
