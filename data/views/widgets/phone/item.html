@@ -1,0 +1,41 @@
+<!-- Model Item Widget -->
+<!-- Diplays a single Model view - Find properties in gowaf/models/phone -->
+<form class="form-group">
+<div class="card">
+        <div class="card-header fadebar">
+            <h3>
+            Model View ({{.Payload.ID}})
+            &nbsp;<a href="/{{$.model}}/edit/{{.Payload.ID}}"><i class="mdi mdi-square-edit-outline text-warning"></i></a>
+            &nbsp;<a href="/{{$.model}}/delete/{{.Payload.ID}}"><i class="mdi mdi-delete-forever text-danger"></i></a>
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Country</th>
+                            <th>Area</th>
+                            <th>Number</th>
+                            <th>Extension</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td class="text-left">{{.Payload.ID}}</td>
+                            <td class="text-left">{{.Payload.CountryCode}}</td>
+                            <td class="text-left">{{.Payload.AreaCode}}</td>
+                            <td class="text-left">{{.Payload.Number}}</td>
+                            <td class="text-left">{{.Payload.Extension}}</td>
+                            <td class="text-left">{{.Payload.PhoneType}}</td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

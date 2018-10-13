@@ -1,0 +1,56 @@
+<!-- Model Dashboard Widget -->
+<!-- Diplays various stats and data about models -->
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body analytics-info">
+                <h4 class="card-title">Total</h4>
+                <ul class="list-inline two-part">
+                    <li>
+                        <div id="sparklinedash3"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></div>
+                    </li>
+                    <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-info">{{.models_total}}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body analytics-info">
+                <h4 class="card-title">Active</h4>
+                <ul class="list-inline two-part">
+                    <li>
+                        <div id="sparklinedash"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></div>
+                    </li>
+                    <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-success">{{.models_active}}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body analytics-info">
+                <h4 class="card-title">Archived</h4>
+                <ul class="list-inline two-part">
+                    <li>
+                        <div id="sparklinedash2"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></div>
+                    </li>
+                    <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span class="counter text-purple">{{.models_archived}}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body analytics-info">
+                <h4 class="card-title">Unused</h4>
+                <ul class="list-inline two-part">
+                    <li>
+                        <div id="sparklinedash4"><canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas></div>
+                    </li>
+                    <li class="text-right"><i class="ti-arrow-down text-danger"></i> <span class="text-danger">{{.models_unused}}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+<!-- Basic Default MVC View Template -->
+{{if eq .islanding true}}
+    {{template "docheadlanding" .}}
+{{else}}
+    {{template "dochead" .}}
+{{end}}
+
+{{if eq .model "landing"}}
+    {{if eq .action "index"}}
+        {{template "widgets/landing/index" .}}
+    {{else if eq .action "team"}}
+        {{template "widgets/landing/team" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/landing/services" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/landing/contact" .}}
+    {{end}}
+{{else if eq .model "account"}}
+    {{if eq .action "index"}}
+        {{template "widgets/account/index" .}}
+    {{else if eq .action "dashboard"}}
+        {{template "widgets/account/dashboard" .}}
+    {{else if eq .action "login"}}
+        {{template "widgets/account/login" .}}
+    {{else if eq .action "register"}}
+        {{template "widgets/account/register" .}}
+    {{else if eq .action "recover"}}
+        {{template "widgets/account/recover" .}}
+     {{else if eq .action "edit"}}
+        {{template "widgets/account/complete_filling" .}}
+    {{else if eq .action "verify"}}
+        {{template "widgets/account/verifyemail" .}}
+    {{else if eq .action "choose_type"}}
+        {{template "widgets/account/complete_filling" .}}
+    {{else if eq .action "2fa"}}
+        {{template "widgets/account/2fa" .}}
+
+    {{end}}
+{{else if eq .model "example"}}
+    {{if eq .action "index"}}
+        {{template "widgets/example/dash" .}}
+        {{template "widgets/example/menu" .}}
+        {{template "widgets/example/find" .}}
+        {{template "widgets/example/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/example/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/example/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/example/item" .}}
+    {{end}}
+{{else if eq .model "chat"}}
+    {{if eq .action "index"}}
+        {{template "widgets/chat/dash" .}}
+        {{template "widgets/chat/menu" .}}
+        {{template "widgets/chat/find" .}}
+        {{template "widgets/chat/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/chat/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/chat/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/chat/item" .}}
+    {{end}}
+{{else if eq .model "address"}}
+    {{if eq .action "index"}}
+        {{template "widgets/address/dash" .}}
+        {{template "widgets/address/menu" .}}
+        {{template "widgets/address/find" .}}
+        {{template "widgets/address/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/address/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/address/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/address/item" .}}
+    {{end}}
+{{else if eq .model "company"}}
+    {{if eq .action "index"}}
+        {{template "widgets/company/dash" .}}
+        {{template "widgets/company/menu" .}}
+        {{template "widgets/company/find" .}}
+        {{template "widgets/company/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/company/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/company/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/company/item" .}}
+    {{end}}
+{{else if eq .model "creditcard"}}
+    {{if eq .action "index"}}
+        {{template "widgets/creditcard/dash" .}}
+        {{template "widgets/creditcard/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/creditcard/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/creditcard/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/creditcard/item" .}}
+    {{end}}
+{{else if eq .model "email"}}
+    {{if eq .action "index"}}
+        {{template "widgets/email/dash" .}}
+        {{template "widgets/email/menu" .}}
+        {{template "widgets/email/find" .}}
+        {{template "widgets/email/list" .}}
+
+    {{else if eq .action "create"}}
+        {{template "widgets/email/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/email/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/email/item" .}}
+    {{end}}
+{{else if eq .model "gender"}}
+    {{if eq .action "index"}}
+        {{template "widgets/gender/dash" .}}
+        {{template "widgets/gender/menu" .}}
+        {{template "widgets/gender/find" .}}
+        {{template "widgets/gender/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/gender/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/gender/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/gender/item" .}}
+    {{end}}
+{{else if eq .model "note"}}
+    {{if eq .action "index"}}
+        {{template "widgets/note/dash" .}}
+        {{template "widgets/note/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/note/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/note/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/note/item" .}}
+    {{end}}
+{{else if eq .model "onboarding"}}
+    {{if eq .action "index"}}
+        {{template "widgets/onboarding/dash" .}}
+        {{template "widgets/onboarding/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/onboarding/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/onboarding/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/onboarding/item" .}}
+    {{end}}
+{{else if eq .model "person"}}
+    {{if eq .action "index"}}
+        {{template "widgets/person/dash" .}}
+        {{template "widgets/person/menu" .}}
+        {{template "widgets/person/find" .}}
+        {{template "widgets/person/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/person/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/person/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/person/item" .}}
+    {{end}}
+{{else if eq .model "personname"}}
+    {{if eq .action "index"}}
+        {{template "widgets/personname/dash" .}}
+        {{template "widgets/personname/menu" .}}
+        {{template "widgets/personname/find" .}}
+        {{template "widgets/personname/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/personname/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/personname/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/personname/item" .}}
+    {{end}}
+{{else if eq .model "persontype"}}
+    {{if eq .action "index"}}
+        {{template "widgets/persontype/dash" .}}
+        {{template "widgets/persontype/menu" .}}
+        {{template "widgets/persontype/find" .}}
+        {{template "widgets/persontype/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/persontype/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/persontype/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/persontype/item" .}}
+    {{end}}
+{{else if eq .model "casbin"}}
+    {{if eq .action "index"}}
+        {{template "widgets/casbin/dash" .}}
+        {{template "widgets/casbin/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/casbin/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/casbin/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/casbin/item" .}}
+    {{end}}
+{{else if eq .model "phone"}}
+    {{if eq .action "index"}}
+        {{template "widgets/phone/dash" .}}
+        {{template "widgets/phone/menu" .}}
+        {{template "widgets/phone/find" .}}
+        {{template "widgets/phone/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/phone/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/phone/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/phone/item" .}}
+    {{end}}
+{{else if eq .model "ip"}}
+    {{if eq .action "index"}}
+        {{template "widgets/ip/dash" .}}
+        {{template "widgets/ip/list" .}}
+    {{else if eq .action "create"}}
+        {{template "widgets/ip/form" .}}
+    {{else if eq .action "edit"}}
+        {{template "widgets/ip/form" .}}
+    {{else if eq .action "view"}}
+        {{template "widgets/ip/item" .}}
+    {{end}}
+{{else}}
+    <!-- IF Model/Action not found load WebApps custom index to handle it -->
+    {{template "indexcustom" .}}
+{{end}}
+
+{{range $k,$v:=.flash}}
+    {{if $v.Error}}
+        <p class="error">
+            {{$v.Error}}
+        </p>
+    {{end}}
+{{end}}
+
+{{if eq .islanding true}}
+    {{template "docfootlanding" .}}
+{{else}}
+    {{template "docfoot" .}}
+{{end}}

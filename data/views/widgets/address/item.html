@@ -1,0 +1,37 @@
+<!-- Model Item Widget -->
+<!-- Diplays a single Model view - Find properties in gowaf/models/address -->
+<form class="form-group">
+<div class="card">
+        <div class="card-header fadebar">
+            <h3>
+            Model View ({{.Payload.ID}})
+                &nbsp;<a href="/{{$.model}}/edit/{{.Payload.ID}}"><i class="mdi mdi-square-edit-outline text-warning"></i></a>
+                &nbsp;<a href="/{{$.model}}/delete/{{.Payload.ID}}"><i class="mdi mdi-delete-forever text-danger"></i></a>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6"><label>Street Address</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Address1}} {{else}} 0 {{end}}</div>
+
+                <div class="col-md-6"><label>Apt. / Suite</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Address2}} {{else}} N/A {{end}}</div>
+
+                <div class="col-md-6"><label>City</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.City}} {{else}} N/A {{end}}</div>
+
+                <div class="col-md-6"><label>State</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.State}} {{else}} N/A {{end}}</div>
+
+                <div class="col-md-6"><label>Zipcode</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Zip}} {{else}} N/A {{end}}</div>
+
+                <div class="col-md-6"><label>County</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.County}} {{else}} N/A {{end}}</div>
+
+                <div class="col-md-6"><label>Country</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Country}} {{else}} N/A {{end}}</div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,82 @@
+###############
+# Application #
+###############
+app_name: GoWAF Blockchain WebApp         # Friendly name for Application             
+domain: nlaak.com                   # The applicatiosn domain
+# Local Dev DB (Postgres)
+base_url: http://localhost:8080     # Base URL host for application
+# LIVE URL
+#base_url: https://www.gwf.io       # Base URL host for application
+port: 8080                          # Port for application to listen on
+
+############
+# database #
+############
+# Local Dev DB (Postgres)
+database:             "postgres"     # Database Dialect: none, mysql, sqlite3 and postgresql
+database_conn:        "postgres://postgres@localhost/gowaf-blockchain?sslmode=disable"
+
+# LIVE DB
+#database_conn:       "postgres://www.gwf.io/gowaf-blockchain?user=gowafapp&password=Read0nly!&sslmode=disable"
+
+# Local Dev DB (MySQL)
+#database:             "mysql"     # Database Dialect: none, mysql, sqlite3 and postgresql
+#database_conn:        "root:test@tcp(localhost:3306)/gowaf?charset=utf8&parseTime=True&loc=Local"
+
+###########
+# Options #
+###########
+verbose: false                         # Detailed Logging (console)
+automigrate: true
+droptables: true
+no_model: false
+load_test_data: true
+googleid: ""                          # Google Analytics ID
+time_before_unused: 120
+
+###########
+# Session #
+###########
+session_name:       "gowaf_blockchain_webapp"
+session_path:       "/"
+session_domain:     ""
+session_maxAge:     3600
+session_secure:     false
+session_HTTPOnly:   true
+session_store:      "ql"              # The name of the session store to use. Options are:  file , cookie ,ql
+
+###########################
+# System Messages (Flash) #
+###########################
+flash:        _flash                  # Flash is the session name for flash messages
+flash_time:   3500                    # time in milliseconds to show the message before hiding (default is 3500)
+flash_stack:  5                       # how many message to display at once (default is 6)
+flash_context_key: flash
+
+#######################
+# enable mvc features #
+#######################
+notifications: false                  # Enable Notifications MVC
+mail: false                           # Enable Mail MVC
+profile: false                        # Enable User Profile MVC
+themecolor: gold                      # requires that profile be enabled as well
+webapp_onboard: false                 # Enable Onboarding for WebApp
+company_onboard: false                # Enable Onboarding for Companies
+user_onboard: false                   # Enable Onboarding for Users
+enable2fa: true                       # Enable 2FA
+
+#################
+# Email Feature #
+#################
+mail_server: "mail.nlaak.com"
+mail_port: 587
+mail_user: "noreply"
+mail_password: "from_cmd_line"
+mail_username: "noreply@nlaak.com"
+
+#################
+# Admin Account #
+#################
+admin_username: "admin"
+admin_password: "admin123"
+#EOF

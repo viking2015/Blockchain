@@ -1,0 +1,109 @@
+
+<script src="/static/plugins/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready( function () {
+
+        var phone = $("input[id*='phone_{{$.model}}']" );
+        var phoneType = $("select[id*='phone_{{$.model}}_phone_type']" );
+        var mail = $("input[id*='email_{{$.model}}']" );
+        var address = $("input[id*='address_{{$.model}}']" );
+        var persinput = $("input[id*='persname_{{$.model}}']" );
+        var perselect= $("select[id*='persname_{{$.model}}']" );
+        var pt = $("select[id*='person_tp_{{$.model}}_name']" );
+        var geninput = $("input[id='legal_sex{{$.model}}']" );
+        var genselect= $("select[id='claimed_sex{{$.model}}']");
+
+        var arr = [phone, phoneType, mail, address, persinput, perselect, pt, geninput, genselect];
+
+
+        {{if or (eq $.model "phone") (eq $.model "email") (eq $.model "gender") (eq $.model "address") (eq $.model "personname") (eq $.model "persontype")}}
+            $('#phone_{{$.model}}_phone_type').attr("name", "phone_type");
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", $(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value",  {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),$(this).attr("data-name"), 1 ){{end}});
+                });
+        });
+        {{ else if eq $.model "company" }}
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", $(this).attr("data-name")+$(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value",  {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),$(this).attr("data-nameP")) {{end}});
+                });
+            });
+        {{else if eq $.model "person-account" }}
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", "Person."+$(this).attr("data-name")+$(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value",  {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),$(this).attr("data-nameP") ){{end}});
+                });
+            });
+
+        {{else if eq $.model "company-person" }}
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", "Person."+$(this).attr("data-name")+$(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value",  {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),($(this).attr("data-nameP")),2){{end}});
+                });
+            });
+        {{else if eq $.model "person" }}
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", $(this).attr("data-name")+$(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value",  {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),$(this).attr("data-nameP")){{end}});
+                });
+            });
+
+        {{else if eq $.model "account-company-person" }}
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", "Company.Person."+$(this).attr("data-name")+$(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value",  {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),("Person."+$(this).attr("data-nameP")), 2 ){{end}});
+                });
+            });
+
+        {{else if eq $.model "account-company" }}
+            arr.forEach(function(item) {
+                item.each(function() {
+                    $( this ).attr("name", "Company."+$(this).attr("data-name")+$(this).attr("name").split(".")[($(this).attr("name").split(".")).length - 1]);
+                    $( this ).attr("value", {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}), $(this).attr("data-nameP"), 2 ){{end}});
+                });
+            });
+
+        {{else if eq $.model "company-fax" }}
+            $( "input[id*='{{$.model}}']" ).each(function() {
+                $( this ).attr("name", "Company.fax."+$(this).attr("name"));
+                $( this ).attr("value", {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}})){{end}});
+            });
+
+        {{else if eq $.model "fax" }}
+            $('#phone_{{$.model}}_phone_type').attr("name", "fax.phone_type");
+            $( "input[id*='phone_{{$.model}}']" ).each(function() {
+                $( this ).attr("name", "fax."+$(this).attr("name"));
+                $( this ).attr("value", {{with $.Payload}} getPayload($( this ).attr("alt"),({{$.Payload}}),"Fax."){{end}});
+            });
+        {{end}}
+    });
+
+
+
+    function getPayload(name, payload, model, person) {
+        model = model.slice(0, -1);
+        var a = JSON.stringify(payload);
+
+        if (person==1){
+            return JSON.parse(a)[name]
+        }else if (person==2){
+            var b = JSON.parse(a)["Person"];
+            var c = b[model];
+            return c[name]
+        }
+
+        var b = JSON.parse(a);
+        var c = b[model];
+
+        return c[name]
+
+    }
+</script>

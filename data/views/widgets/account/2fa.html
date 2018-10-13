@@ -1,0 +1,12 @@
+<form action="/account/2FA" style="text-align: center" id="formLogin" method="POST">
+    <p>Please scan this QR-Code in authenticator</p>
+    <img width="200" height="200" src="data:image/jpg;base64,{{.Payload.QR}}">
+    <p class="field">
+        <label>Token from authenticator:</label>
+        <br>
+        <input type="text" maxlength="8" class="form-control here" style="width: 150px"  name="token"/>
+    </p>
+    <p class="buttons">
+        <input type="submit" class="btn btn-success" value="Submit" />
+    </p>
+</form>

@@ -1,0 +1,50 @@
+<!-- Model form Widget -->
+<!-- Allows Edit or Creating new Models (with proper access) -->
+{{if  eq $.model "persontype"}}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header fadebar">
+                <h3>{{.title}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    {{template "widgets/setFieldName" .}}
+                    <form class="form-horizontal" role="form" method="post" action="/{{.model}}/{{if eq .action "edit"}}update/{{.Payload.ID}}{{else}}{{.action}}{{end}}">
+{{end}}
+                    <div class="form-group row">
+                        <label for="string" class="col-4 col-form-label">Person type</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="sizing-addon3"><i class="mdi mdi-account-multiple"></i></span>
+                                <select id="person_tp_{{$.model}}_name" name="name" alt="name"  data-nameP="PersonType." data-name="person_type."  class="form-control"  aria-describedby="sizing-addon3">
+                                    <option>Insurer</option>
+                                    <option>Attorney</option>
+                                    <option>Referral</option>
+                                    <option>Engineer</option>
+                                </select>
+                                <a href="#" id="find_persontype_{{.model}}" type="button" data-target="#persontypeFormModal" data-whatever="@mdo"><span class="input-group-addon" id="sizing-addon3"><i class="mdi mdi-database-search"></i></span></a>
+                            </div>
+                        </div>
+                    </div>
+{{if  eq $.model "persontype"}}
+                    <div class="form-group row align-items-center justify-content-center">
+                        <div class="block-center">
+                            <a class="btn btn-danger" href="/{{.model}}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+<script>
+    $('#find_persontype_{{.model}}').click(function () {
+        $('#persontype_{{.model}}').modal('show')
+    })
+</script>
+{{template "widgets/persontype/find" .}}

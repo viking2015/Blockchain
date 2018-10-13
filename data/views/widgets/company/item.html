@@ -1,0 +1,28 @@
+<form class="form-group">
+    <div class="card">
+            <div class="card-header fadebar">
+                <h3>
+                Model View ({{.Payload.ID}})
+                {{if or (eq .Payload.ID $.companyID)  (eq $.role "admin")}}
+                    <a href="/{{$.model}}/edit/{{.Payload.ID}}"><i class="mdi mdi-square-edit-outline text-warning"></i></a>
+                    <a href="/{{$.model}}/delete/{{.Payload.ID}}"><i class="mdi mdi-delete-forever text-danger"></i></a>
+                {{end}}
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6"><label>Name</label></div>
+                    <div class="col-md-6 text-right">{{with .Payload}} {{.Name}} {{else}} 0 {{end}}</div>
+
+                    <div class="col-md-6"><label>POC Name</label></div>
+                    <div class="col-md-6 text-right">{{with .Payload}} {{.Person.PrimaryName.First}}  {{.Person.PrimaryName.Last}} {{else}} 0 {{end}}</div>
+
+                    <div class="col-md-6"><label>Phone</label></div>
+                    <div class="col-md-6 text-right">{{with .Payload}} {{.Phone.CountryCode}}{{.Phone.Number}} {{else}} N/A {{end}}</div>
+
+                    <div class="col-md-6"><label>Fax</label></div>
+                    <div class="col-md-6 text-right">{{with .Payload}} {{.Fax.CountryCode}}{{.Fax.Number}} {{else}} N/A {{end}}</div>
+                </div>
+            </div>
+    </div>
+</form>

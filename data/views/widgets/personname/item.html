@@ -1,0 +1,36 @@
+<!-- Model Item Widget -->
+<!-- Diplays a single Model view - Find properties in gowaf/models/personname -->
+<form class="form-group">
+<div class="card">
+        <div class="card-header fadebar">
+            <h3>
+            Model View ({{.Payload.ID}})
+            &nbsp;<a href="/{{$.model}}/edit/{{.Payload.ID}}"><i class="mdi mdi-square-edit-outline text-warning"></i></a>
+            &nbsp;<a href="/{{$.model}}/delete/{{.Payload.ID}}"><i class="mdi mdi-delete-forever text-danger"></i></a>
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6"><label>Prefix</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Prefix}} {{else}}{{end}}</div>
+
+                <div class="col-md-6"><label>First</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.First}} {{else}}{{end}}</div>
+
+                <div class="col-md-6"><label>Middle</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Middle}} {{else}}{{end}}</div>
+
+                <div class="col-md-6"><label>Last</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Last}} {{else}}{{end}}</div>
+
+                <div class="col-md-6"><label>Suffix</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Suffix}} {{else}}{{end}}</div>
+
+                <div class="col-md-6"><label>GoesBy</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.GoesBy}} {{else}}{{end}}</div>
+
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,19 @@
+<!-- Model full Widget -->
+<!-- Displays all model widgets -->
+
+{{template "widgets/ip/dash" .}}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body wizard-content ">
+                <div class="col-md-6">
+                    {{template "widgets/ip/find" .}}
+                </div>
+                <div class="col-md-6">
+                    {{template "widgets/ip/menu" .}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{template "widgets/ip/list" .}}

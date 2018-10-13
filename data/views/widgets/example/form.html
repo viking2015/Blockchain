@@ -1,0 +1,51 @@
+<!-- Model form Widget -->
+<!-- Allows Edit or Creating new Models (with proper access) -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header fadebar">
+                <h3>{{.title}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <form class="form-horizontal" role="form" method="post" action="/{{$.model}}/{{if eq .action "edit"}}update/{{.Payload.ID}}{{else}}{{.action}}{{end}}">
+                    <div class="form-group row">
+                        <label for="string" class="col-4 col-form-label">String</label>
+                        <div class="col-8">
+                            <input id="string" name="string" placeholder="enter some text" type="text" {{with .Payload}}value="{{.String}}"{{end}} required="required" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="number" class="col-4 col-form-label">Number</label>
+                        <div class="col-8">
+                            <input id="number" name="number" placeholder="enter a whole number" type="text" {{with .Payload}}value="{{.Number}}"{{end}} class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="float" class="col-4 col-form-label">Float</label>
+                        <div class="col-8">
+                            <input id="float" name="float" placeholder="enter a number with decimal" type="text" {{with .Payload}}value="{{.Float}}"{{end}} class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4">Toggle</label>
+                        <div class="col-8">
+                            <label class="custom-control custom-checkbox">
+                                <input name="toggle" type="checkbox" class="custom-control-input" {{with .Payload}}{{if .Toggle}}checked{{end}}{{end}}>
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Is On</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center justify-content-center">
+                        <div class="block-center">
+                            <a class="btn btn-danger" href="/{{$.model}}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

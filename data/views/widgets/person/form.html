@@ -1,0 +1,41 @@
+<!-- Model form Widget -->
+<!-- Allows Edit or Creating new Models (with proper access) -->
+{{if eq $.model "person"}}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header fadebar">
+                <h3>{{.title}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+{{/*{{end}}*/}}
+{{/*{{if (eq $.model "person")}}*/}}
+        <form class="form-horizontal" id = "person-form" role="form" method="post" {{with .Payload}} action="/{{$.model}}/update/{{$.Payload.ID}}"{{else}} action="/person/create" {{end}}>
+{{/*{{end}}*/}}
+{{/*{{if (eq $.model "person-account")}}*/}}
+    {{/*<form class="form-horizontal" id = "person-form" role="form" method="post" action="/person/create">*/}}
+{{end}}
+                        {{template "widgets/email/form"  .changeName.SetName  $.model .Payload }}
+                        {{template "widgets/personname/form" .changeName.SetName  $.model .Payload}}
+                        {{template "widgets/persontype/form" .changeName.SetName  $.model .Payload}}
+                        {{template "widgets/address/form" .changeName.SetName  $.model .Payload}}
+                        {{template "widgets/phone/form" .changeName.SetName  $.model .Payload}}
+                        {{template "widgets/gender/form" .changeName.SetName  $.model .Payload}}
+                        {{template "widgets/setFieldName" .}}
+
+{{if eq $.model "person"}}
+
+                        <div class="form-group row align-items-center justify-content-center"  id="person-buttons">
+                            <div class="block-center">
+                                <a class="btn btn-danger" href="/{{$.model}}">Cancel</a>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

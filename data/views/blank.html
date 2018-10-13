@@ -1,0 +1,15 @@
+{{template "dochead"}}
+
+{{range $k,$v:=.flash}}
+{{if $v.Error}}
+<p class="error">
+{{$v.Error}}
+</p>
+{{end}}
+{{end}}
+
+<div class="row">
+{PAGE-CONTENT}
+</div>
+
+{{template "docfoot"}}	

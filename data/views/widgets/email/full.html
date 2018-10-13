@@ -1,0 +1,19 @@
+<!-- Model full Widget -->
+<!-- Displays all model widgets -->
+
+{{template "widgets/email/dash" .}}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body wizard-content ">
+                <div class="col-md-6">
+                    {{template "widgets/email/find" .}}
+                </div>
+                <div class="col-md-6">
+                    {{template "widgets/email/menu" .}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{template "widgets/email/list" .}}

@@ -1,0 +1,41 @@
+<!-- Table list of all models -->
+<!-- TODO: Check Template Vars, If Route is Index Show This -->
+<!-- Table list of all models -->
+<!-- TODO: Check Template Vars, If Route is Index Show This -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header fadebar">
+                <h3>Browse {{.title}} {{if eq $.role "admin" }}<a href="/{{$.model}}/create"><i class="mdi mdi-plus text-success"></i></a>{{end}}</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>            
+                                    <th>ID</th> 
+                                    <th>Note</th> 
+                                    <th>Actions</th> 
+                                </tr>
+                            </thead>            
+                            {{range $k,$v:=.List}}
+                            <tr>
+                                <td class="text-left">{{$v.ID}}</td>
+                                <td class="text-left">{{$v.Body}}</td>
+                                <td class="text-left">
+                                <td>
+                                    <a href="/{{$.model}}/view/{{$v.ID}}"><i class="mdi mdi-eye text-info"></i></a>
+                                    <a href="/{{$.model}}/edit/{{$v.ID}}"><i class="mdi mdi-square-edit-outline text-warning"></i></a>
+                                    <a href="/{{$.model}}/delete/{{$v.ID}}"><i class="mdi mdi-delete-forever text-danger"></i></a>
+                                </td>
+                            </tr>
+                            {{end}}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

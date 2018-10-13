@@ -1,0 +1,36 @@
+<!-- Default Carousel for webapp -->
+<!-- 
+1. Backend sets template variable Carousel
+2. use range on Carousel.Slides to define each slide
+3. use Carousel.Name to define carousel div ID 
+4. use Carousel.Slide.Image for the image name 
+5. use Carousel.Slide.ImageText for Image Alt Text
+6. use Carousel.Slide.HTML for the HTML content
+
+Note: Carousel is sized by parent container
+-->
+<div id="{{$.Carousel.Name}}" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#{{$.Carousel.Name}}" data-slide-to="0" class=""></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="carousel-item">
+            {{if $.Carousel.Slide.Image}}
+            <img class="img-responsive" src="/static/carousel/images/{{$.Carousel.Slide.Image}}" alt="{{$.Carousel.Slide.ImageText}}">
+            {{end}}
+            {{if $.Carousel.Slide.HTML}}
+            <div class="carousel-caption d-none d-md-block">
+                {{$.Carousel.Slide.HTML}}
+            </div>
+            {{end}}
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#{{$.Carousel.Name}}" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#{{$.Carousel.Name}}" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

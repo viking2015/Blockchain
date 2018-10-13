@@ -1,0 +1,115 @@
+<!-- Model form Widget -->
+<!-- Allows Edit or Creating new Models (with proper access) -->
+{{if  eq $.model "phone"}}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header fadebar">
+                <h3>{{.title}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                {{template "widgets/setFieldName" .}}
+                <form class="form-horizontal" data-toggle="validate-phone" role="form" method="post" action="/{{.model}}/{{if eq .action "edit"}}update/{{.Payload.ID}}{{else}}{{.action}}{{end}}">
+{{end}}
+                    <div class="form-group row" id="telephone">
+                        <label for="address1" class="col-4 col-form-label control-label">Phone</label>
+                        <div class="col-8">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="sizing-addon3"><i class="mdi mdi-phone"></i></span>
+                                <input  id="phone_{{$.model}}_country_code" name="country_code" aria-describedby="sizing-addon3" data-name="Phone." data-nameP="Phone." alt="country_code" placeholder="+1" type="text" class="form-control here">
+                                <input  id="phone_{{$.model}}_area_code" name="area_code" aria-describedby="sizing-addon3" data-name="Phone." data-nameP="Phone." alt="area_code" placeholder="555" type="text"   class="form-control here">
+                                <input  id="phone_{{$.model}}_number" name="number" aria-describedby="sizing-addon3" data-name="Phone." data-nameP="Phone." alt="number"  placeholder="5555" type="text"   class="form-control here">
+                                <input  id="phone_{{$.model}}_extension" name="extension" aria-describedby="sizing-addon3" data-name="Phone." data-nameP="Phone."  alt="extension" placeholder="ext." type="text"   class="form-control here">
+
+                            <select id="phone_{{$.model}}_phone_type" name="phone_type" class="form-control" alt="phone_type" data-name="Phone." data-nameP="Phone."  aria-describedby="sizing-addon3">
+                                <option value="1">Mobile</option>
+                                <option value="2">Home</option>
+                                <option value="3">Business</option>
+                                <option value="4">Fax</option>
+                            </select>
+                                <a href="#" id="find_phone_{{.model}}" type="button" data-target="#phoneFormModal" data-whatever="@mdo"><span class="input-group-addon" id="sizing-addon3"><i class="mdi mdi-database-search"></i></span></a>
+                        </div>
+                    </div>
+                    </div>
+{{if  eq $.model "phone"}}
+                    <div class="form-group row align-items-center justify-content-center">
+                        <div class="block-center">
+                            <a class="btn btn-danger" href="/{{$.model}}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{if or (eq $.model "fax") (eq $.model "company-fax")}}
+  {{template "widgets/setFieldName" .}}
+{{end}}
+
+<script src="/static/plugins/jquery/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+    $('#find_phone_{{.model}}').click(function () {
+        $('#phone_{{.model}}').modal('show')
+    })
+
+    jQuery.validator.setDefaults({
+        rules: {
+            country_code : {
+                required : true,
+                minlength: 1,
+                maxlength: 5,
+                number: true,
+            },
+            area_code: {
+                minlength: 3,
+                maxlength: 10,
+                number: true,
+            },
+            number: {
+                required: true,
+                minlength: 3,
+                maxlength: 10,
+                number: true,
+            },
+        },
+
+        highlight: function(element) {
+            $(element).closest("input[id*='phone_{{$.model}}']").removeClass('form-control is-valid').addClass('form-control is-invalid');
+            if ($(element).closest('.form-group').find('i.mdi').length < 4) {
+                $(element).closest('.form-group').find('.mdi-alert').remove();
+                $(element).closest('.form-group').find('.mdi-check').remove();
+                $(element).closest('.form-group').find('.mdi-database-search').append('<i class="mdi mdi-alert text-danger"></i>');
+            }
+        },
+        unhighlight: function(element) {
+            $(element).closest("input[id*='phone_{{$.model}}']").removeClass('form-control is-invalid').addClass('form-control is-valid');
+            if ($(element).closest('.form-group').find('i.mdi').length < 4) {
+                $(element).closest('.form-group').find('.mdi-check').remove();
+                $(element).closest('.form-group').find('.mdi-alert').remove();
+                $(element).closest('.form-group').find('.mdi-database-search').append('<i class="mdi mdi-check text-success"></i>');
+            }
+        },
+        errorPlacement: function(error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(('.input-group'));
+            }
+        },
+
+        errorElement: 'span',
+        errorClass: 'help-block',
+        ignore: ''
+
+    });
+
+    $('form[data-toggle="validate-phone"]').validate();
+
+
+</script>
+{{template "widgets/phone/find" .}}

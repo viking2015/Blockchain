@@ -1,0 +1,91 @@
+
+<!-- Model form Widget -->
+<!-- Allows Edit or Creating new Models (with proper access) -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header">
+                <h2>{{.title}}</h2>
+            </div>
+            <div class="card-body">
+            <h4 class="box-title m-b-20">Select type of Account</h4>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <select class="form-control form-control-line" id="typeOfAccount" onchange="showMessage()">
+                            <option   name="typeOfAccount" value="person">Person</option>
+                            <option name="typeOfAccount" value="company">Company</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div id="company" style="display: none">
+                    <form class="form-horizontal" >
+                        <div class="form-group row">
+                            <label for="string" class="col-4 col-form-label">Company Name</label>
+                            <div class="col-8">
+                                <input id="name" name="Company.name" placeholder="ACME, Ltd." type="text" class="form-control here">
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center justify-content-center">
+                            <div class="form-group text-center m-t-20">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" formaction="/account/update/{{.uid}}" formmethod="post" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                <div id="person">
+                    <form class="form-horizontal"  >
+                        <div class="form-group row">
+                            <label for="string" class="col-4 col-form-label">Name</label>
+                            <div class="col-8">
+                                <input  name="Person.PrimaryName.first"  type="text" placeholder="first name" class="form-control here">
+                                <input name="Person.PrimaryName.last"  type="text"placeholder="last name" class="form-control here">                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="string" class="col-4 col-form-label">Email</label>
+                            <div class="col-8">
+                                <input name="Person.Email.username" placeholder="username"  class="form-control here">
+                                <input  name="Person.Email.domain" placeholder="domain" type="text"  class="form-control here">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="string" class="col-4 col-form-label">Phone</label>
+                            <div class="col-8">
+                                <input  name="Person.Phone.country_code" placeholder="country code" type="text"  class="form-control here">
+                                <input  name="Person.Phone.number" placeholder="number"   class="form-control here">
+                            </div>
+                        </div>
+                        <div class="form-group row align-items-center justify-content-center">
+                            <div class="form-group text-center m-t-20">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-info btn-m btn-block text-uppercase waves-effect waves-light" formaction="/account/update/{{.uid}}" formmethod="post" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/plugins/jquery/jquery.min.js"></script>
+<script>
+    function showMessage() {
+        var acc = document.getElementById('typeOfAccount').value;
+
+        if(acc === "company")
+        {
+            document.getElementById('company').style.display = 'block';
+            document.getElementById('person').style.display = 'none';
+        }
+        else
+        {
+            document.getElementById('person').style.display = 'block';
+            document.getElementById('company').style.display = 'none';
+        }
+    }
+</script>

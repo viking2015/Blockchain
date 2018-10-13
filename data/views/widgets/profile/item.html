@@ -1,0 +1,28 @@
+<!-- Model Item Widget -->
+<!-- Diplays a single Model view - Find properties in gowaf/models/example -->
+<form class="form-group">
+<div class="card">
+        <div class="card-header">
+            <h2>
+            Model View ({{.Payload.ID}})
+            &nbsp;<a href="/example/edit/{{.Payload.ID}}"><i class="mdi mdi-square-edit-outline text-warning"></i></a>
+            &nbsp;<a href="/example/delete/{{.Payload.ID}}"><i class="mdi mdi-delete-forever text-danger"></i></a>
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6"><label>Number</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Number}} {{else}} 0 {{end}}</div>
+
+                <div class="col-md-6"><label>String</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.String}} {{else}} N/A {{end}}</div>
+
+                <div class="col-md-6"><label>Toggle</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Toggle}} {{else}} 0 {{end}}</div>
+
+                <div class="col-md-6"><label>Float</label></div>
+                <div class="col-md-6 text-right">{{with .Payload}} {{.Float}} {{else}} 0.00 {{end}}</div>
+            </div>
+        </div>
+    </div>
+</form>

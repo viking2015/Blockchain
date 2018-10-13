@@ -1,0 +1,53 @@
+<!-- Model form Widget -->
+<!-- Allows Edit or Creating new Models (with proper access) -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card text-center">
+            <div class="card-header fadebar">
+                <h3>{{.title}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <form class="form-horizontal" role="form" method="post" action="/{{$.model}}/{{if eq .action "edit"}}update/{{.Payload.ID}}{{else}}{{.action}}{{end}}">
+                    <div class="form-group row">
+                        <label for="name_on_card" class="col-4 col-form-label">Name on Card</label>
+                        <div class="col-8">
+                            <input id="name_on_card" name="name_on_card" placeholder="Jane Doe" type="text" {{with .Payload}}value="{{.NameOnCard}}"{{end}} required="required" class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="number" class="col-4 col-form-label">Number</label>
+                        <div class="col-8">
+                            <input id="number" name="number" placeholder="credit card number" type="text" {{with .Payload}}value="{{.Number}}"{{end}} class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exp_month" class="col-4 col-form-label">Exp. Month</label>
+                        <div class="col-8">
+                            <input id="exp_month" name="exp_month" placeholder="01" type="text" {{with .Payload}}value="{{.ExpMonth}}"{{end}} class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exp_year" class="col-4 col-form-label">Exp. Year</label>
+                        <div class="col-8">
+                            <input id="exp_year" name="exp_year" placeholder="2018" type="text" {{with .Payload}}value="{{.ExpYear}}"{{end}} class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="security_code" class="col-4 col-form-label">Security Code</label>
+                        <div class="col-8">
+                            <input id="security_code" name="security_code" placeholder="0000" type="text" {{with .Payload}}value="{{.SecurityCode}}"{{end}} class="form-control here">
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center justify-content-center">
+                        <div class="block-center">
+                            <a class="btn btn-danger" href="/{{$.model}}">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
