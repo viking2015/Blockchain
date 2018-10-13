@@ -89,6 +89,70 @@ type Config struct {
 	Adapter *gormadapter.Adapter
 	//Time in hours before model is active
 	TimeBeforeUnused int `json:"time_before_unused" yaml:"time_before_unused" toml:"time_before_unused" hcl:"time_before_unused"`
+	//////////////////////////////////////
+	// Blockchainn Specific Configuration
+	//////////////////////////////////////
+	//CoinName is your Coin or Tokens ICO name. ie Bitcoin Copper ICO
+	CoinName string `json:"coin_name" yaml:"coin_name" toml:"coin_name" hcl:"coin_name"`
+	//CoinSymbol is the 3-4 uppercase letters used to identify your coin in the exchange/listings
+	CoinSymbol string `json:"coin_symbol" yaml:"coin_symbol" toml:"coin_symbol" hcl:"coin_symbol"`
+	//CoinPurpose is the reason for your new coin or token. What will it privide. Summarize here.
+	CoinPurpose string `json:"coin_purpose" yaml:"coin_purpose" toml:"coin_purpose" hcl:"coin_purpose"`
+	//CoinAMLCompliant shows if your ICO is AML compliant. Yes|No
+	CoinAMLCompliant bool `json:"coin_aml_compliant" yaml:"coin_aml_compliant" toml:"coin_aml_compliant" hcl:"coin_aml_compliant"`
+	//CoinKYCCompliant shows if your ICO is KYC compliant. Yes|No
+	CoinKYCCompliant bool `json:"coin_kyc_compliant" yaml:"coin_kyc_compliant" toml:"coin_kyc_compliant" hcl:"coin_kyc_compliant"`
+	//CoinCompany is the registered name for your company
+	//CoinCompany // Use CompanyName
+	//CoinCountry is the country in which you compan is registered
+	//CoinCountry = "Cayman Islands"
+	//CoinCEO is the CEO or Owner of the registered company
+	//CoinCEO = "Andrew Donelson"
+	//CoinContact = is the valid direct email to the {CoinCEO} and is also the Account Email
+	//CoinContact = "gwf@nlaak.com"
+	//CoinSubsidy is the Number of coins given to all new addresses
+	CoinSubsidy uint `json:"coin_subsidy" yaml:"coin_subsidy" toml:"coin_subsidy" hcl:"coin_subsidy"`
+	//CoinICOSupply is the total number of coins sold in ICO
+	CoinICOSupply uint64 `json:"coin_ico_supply" yaml:"coin_ico_supply" toml:"coin_ico_supply" hcl:"coin_ico_supply"`
+	//CoinDevSupply is the total numbner of coins reserved for developers (initial bonus)
+	CoinDevSupply uint64 `json:"coin_dev_supply" yaml:"coin_dev_supply" toml:"coin_dev_supply" hcl:"coin_dev_supply"`
+	//CoinOAMSupply is the total numnber of coins reserved for Operating and Marketing Costs (min 6 months)
+	CoinOAMSupply uint64 `json:"coin_oam_supply" yaml:"coin_oam_supply" toml:"coin_oam_supply" hcl:"coin_oam_supply"`
+	//CoinPLTSupply is the total number of coins reserved for working capital/misc expenses not forseen
+	CoinPLTSupply uint64 `json:"coin_plt_supply" yaml:"coin_plt_supply" toml:"coin_plt_supply" hcl:"coin_plt_supply"`
+	CoinDecimals  uint   `json:"coin_decimals" yaml:"coin_decimals" toml:"coin_decimals" hcl:"coin_decimals"`
+
+	/* INTERNAL USE ONLY */
+	//12M, 10M ICO, 400k Staff, 1.6M Operations & Marketing
+	CoinTotalSupply uint64 `json:"coin_total_supply" yaml:"coin_total_supply" toml:"coin_total_supply" hcl:"coin_total_supply"`
+
+	//CoinLandingPage is the URL to your landing page (We handle this)
+	//format: https://www/gwf.io/ico/{CoinSymbol}/
+	CoinLandingPage string `json:"coin_landing" yaml:"coin_landing" toml:"coin_landing" hcl:"coin_landing"`
+
+	//CoinWhitePapere is the URL to your whitepaper (We handle this)
+	//format: https://www/gwf.io/ico/{CoinSymbol}/
+	CoinWhitePaper string `json:"coin_whitepaper" yaml:"coin_whitepaper" toml:"coin_whitepaper" hcl:"coin_whitepaper"`
+
+	//CoinDashboardPage is the URL to your users dashboard page (We handle this)
+	//format: https://www/gwf.io/ico/{CoinSymbol}/dashboard
+	CoinDashboardPage string `json:"coin_dashboard" yaml:"coin_dashboard" toml:"coin_dashboard" hcl:"coin_dashboard"`
+
+	//CoinAPI is the URL to your API endpoints (We handle this)
+	//format: https://www/gwf.io/ico/api/{CoinSymbol}/{EndPoint}
+	CoinAPI string `json:"coin_api" yaml:"coin_api" toml:"coin_api" hcl:"coin_api"`
+
+	//FilePathData is the complete path to the master data directory
+	//Format: data/blockchain-{CoinPort}.db
+	FilePathData string `json:"filepath_data" yaml:"filepath_data" toml:"filepath_data" hcl:"filepath_data"`
+
+	//FilePathBlockchain is the complete path to the ICO's blockchain database
+	//Format: data/ico/{CoinSymbol}/blockchain-{CoinPort}.db
+	FilePathBlockchain string `json:"filepath_blockchain" yaml:"filepath_blockchain" toml:"filepath_blockchain" hcl:"filepath_blockchain"`
+
+	//FilePathWallets is the complete path to the ICO's wallets file
+	//Format: data/ico/{CoinSymbol}/wallets-{CoinPort}.dat
+	FilePathWallets string `json:"filepath_wallets" yaml:"filepath_wallets" toml:"filepath_wallets" hcl:"filepath_wallets"`
 }
 
 // DefaultConfig returns the default configuration settings.
@@ -131,13 +195,32 @@ func DefaultConfig() *Config {
 		SessionKeyPair: []string{
 			string(a), string(b),
 		},
-		Flash:            "_flash",
-		WhiteList:        whitelist.NewBasic(),
-		Enable2FA:        false,
-		EnableWList:      false,
-		TimeBeforeUnused: 120,
-		AdminUsername:    "Admin",
-		AdminPassword:    "admin123",
+		Flash:              "_flash",
+		WhiteList:          whitelist.NewBasic(),
+		Enable2FA:          false,
+		EnableWList:        false,
+		TimeBeforeUnused:   120,
+		AdminUsername:      "Admin",
+		AdminPassword:      "admin123",
+		CoinName:           "GWF ICO Coin",
+		CoinSymbol:         "GWFI",
+		CoinPurpose:        "This blockchain and coin supply is being used for the GWF ICO and will be swapped out 1:1 for Spartacus Token when the actual chains development is complete.",
+		CoinAMLCompliant:   false,
+		CoinKYCCompliant:   false,
+		CoinSubsidy:        0,
+		CoinICOSupply:      uint64(10000000), //10M ICO
+		CoinDevSupply:      uint64(500000),   //500k Dev Team
+		CoinOAMSupply:      uint64(1500000),  //1.5M Operations & Marketing
+		CoinPLTSupply:      uint64(3000000),  //3M Platform, Misc, Petty Cash, Capital, etc.
+		CoinTotalSupply:    uint64(15000000),
+		CoinDecimals:       10,
+		CoinLandingPage:    "https://www/gwf.io/%s",
+		CoinWhitePaper:     "https://www/gwf.io/%s/whitepaper",
+		CoinDashboardPage:  "https://www/gwf.io/%s/dashboard",
+		CoinAPI:            "https://www/gwf.io/api/%s/%s",
+		FilePathData:       "../data",
+		FilePathBlockchain: "blockchain/blockchain-%s.db",
+		FilePathWallets:    "blockchain/wallets-%s.dat",
 	}
 }
 
