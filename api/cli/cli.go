@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/NlaakStudios/Blockchain/api/core"
 	"github.com/NlaakStudios/Blockchain/config"
@@ -55,15 +56,57 @@ func NewClient(cfgDir, cfgName string) (*Client, error) {
 		cli.setConfigFolder("config")
 	}
 
-	fmt.Printf(
-		"%s v%s\nGoWAf Framework v%s\nHost: %s\nDatabase: %s\n%s\n",
-		cli.Config.AppName, cli.Version,
-		cli.GoWAFVersion,
-		cli.Config.BaseURL,
-		cli.Config.DatabaseConn,
-		"------------------------------------------------------",
-	)
+	cli.init()
+
+	cli.printHeader()
 	return cli, nil
+}
+
+// loadConfig loads the configuration file. If cfg is provided, then it is used as the directory
+// for searching the configuration files. It defaults to the directory named config in the current
+// working directory.
+func loadConfig(name string, cfg ...string) (*config.Config, error) {
+	cfgDir := "config"
+	if len(cfg) > 0 {
+		cfgDir = cfg[0]
+	}
+
+	// Load configurations.
+	cfgFile, err := findConfigFile(cfgDir, name)
+	if err != nil {
+		return nil, err
+	}
+	return config.NewConfig(cfgFile)
+}
+
+// findConfigFile finds the configuration file name in the directory dir.
+func findConfigFile(dir string, name string) (file string, err error) {
+	extensions := []string{".json", ".toml", ".yml", ".hcl"}
+
+	for _, ext := range extensions {
+		file = filepath.Join(dir, name)
+		if info, serr := os.Stat(file); serr == nil && !info.IsDir() {
+			//TODO: Coverage -  Need to hit here
+			return
+		}
+		file = file + ext
+		if info, serr := os.Stat(file); serr == nil && !info.IsDir() {
+			return
+		}
+	}
+	return "", fmt.Errorf("gowaf: can't find configuration file %s in %s", name, dir)
+}
+
+// init initializes values to the app components.
+func (cli *Client) init() error {
+	appConfig, err := loadConfig(cli.ConfigName, cli.ConfigFolder)
+	if err != nil {
+		return err
+	}
+	cli.Config = appConfig
+	cli.isInit = true
+
+	return nil
 }
 
 // SetFixturePath sets the directory path as a base to all other folders (config, views, etc).
@@ -112,7 +155,7 @@ func (cli *Client) Run() {
 	cli.NodePort = config.NodePort
 	utils.CreateDirIfNotExist(config.FilePathData)
 
-	//See if blockchain file exists including data folder. If not crete folder, display notice
+	//See if blockchain file exists including data folder. If not create folder, display notice
 	walletsFile := core.GetWalletsFile(cli.NodePort)
 	if _, err := os.Stat(walletsFile); os.IsNotExist(err) {
 		println("Wallets file does not exist in ", walletsFile, ", use `blockchain createwallet` to create at least one wallet")
