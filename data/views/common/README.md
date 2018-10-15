@@ -1,1 +1,0 @@
-All common (model independent) widgets (List, Carousel, etc)

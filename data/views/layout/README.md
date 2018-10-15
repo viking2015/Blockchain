@@ -1,1 +1,0 @@
-All layout related widgets (document header, footer, sidebars, etc)

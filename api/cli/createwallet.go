@@ -7,7 +7,7 @@ import (
 )
 
 //CreateWallet creates a new wallet address
-func (cli *CLI) CreateWallet() {
+func (cli *Client) CreateWallet() {
 	wallets, _ := core.NewWallets(cli.NodePort)
 	address := wallets.CreateWallet()
 	wallets.SaveToFile(cli.NodePort)

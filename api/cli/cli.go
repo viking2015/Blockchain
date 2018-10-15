@@ -7,25 +7,84 @@ import (
 	"os"
 
 	"github.com/NlaakStudios/Blockchain/api/core"
-
-	"github.com/NlaakStudios/Blockchain/utils"
-
 	"github.com/NlaakStudios/Blockchain/config"
+	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/gowaf/logger"
 	//"os"
 )
 
-//CLI is the main client structure
-type CLI struct {
+//Client is the main client structure
+type Client struct {
 	NodePort string
-	CoinInfo config.CoinStruct
+	//CoinInfo     config.CoinStruct
+	Version      string
+	GoWAFVersion string
+	Config       *config.Config
+	Log          logger.Logger
+	DataFolder   string
+	ConfigName   string
+	ConfigFolder string
+	isInit       bool
+}
+
+// NewMVC creates a new MVC gowaf app. If dir is passed, it should be a directory to look for
+// all project folders (config, static, views, models, controllers, etc). The App returned is initialized.
+func NewClient(cfgDir, cfgName string) (*Client, error) {
+	cli := &Client{
+		Version: Version(),
+		Log:     logger.NewDefaultLogger(os.Stdout),
+	}
+
+	//Prepare Config Folder
+	if len(cfgDir) > 0 {
+		cli.setDataPath(cfgDir)
+	} else {
+		cli.setDataPath("./data")
+	}
+
+	//Prepare Config Name (without extension)
+	if len(cfgName) > 0 {
+		cli.ConfigName = cfgName
+	} else {
+		cli.ConfigName = "blockchain"
+	}
+
+	cli.setConfigFolder(fmt.Sprintf("%s/config", cli.DataFolder))
+
+	if cli.ConfigFolder == "" {
+		cli.setConfigFolder("config")
+	}
+
+	fmt.Printf(
+		"%s v%s\nGoWAf Framework v%s\nHost: %s\nDatabase: %s\n%s\n",
+		cli.Config.AppName, cli.Version,
+		cli.GoWAFVersion,
+		cli.Config.BaseURL,
+		cli.Config.DatabaseConn,
+		"------------------------------------------------------",
+	)
+	return cli, nil
+}
+
+// SetFixturePath sets the directory path as a base to all other folders (config, views, etc).
+func (cli *Client) setDataPath(dir string) {
+	cli.DataFolder = dir
+}
+
+// SetConfigFolder sets the directory path to search for the config files.
+func (cli *Client) setConfigFolder(dir string) {
+	cli.ConfigFolder = dir
+}
+
+//printHeader diplay commandline application header to the user.
+func (cli *Client) printHeader() {
+	fmt.Printf("%s Blockchain Version %s\n", config.CoinName, config.Version())
+	fmt.Printf("%s (%s)\n", config.CoinCompany, config.CoinLandingPage)
+	fmt.Println("-----------------------------------------------------------------------------------------")
 }
 
 //printUsage diplay commandline usage information to the user.
-func (cli *CLI) printUsage() {
-	fmt.Println("")
-	fmt.Printf("%s Daemon Version %s\n", config.CoinName, config.Version())
-	fmt.Printf("%s (%s)\n", config.CoinCompany, config.CoinLandingPage)
-	fmt.Println("-----------------------------------------------------------------------------------------")
+func (cli *Client) printUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("	createblockchain -address ADDRESS - Create a blockchain and send genesis block reward to ADDRESS")
 	fmt.Println("	createwallet - Generates a new key-pair and saves it into the wallet file")
@@ -40,19 +99,15 @@ func (cli *CLI) printUsage() {
 }
 
 //validateArgs validates the parameters passsed in via commandline
-func (cli *CLI) validateArgs() {
+func (cli *Client) validateArgs() {
 	if len(os.Args) < 2 {
 		cli.printUsage()
 		os.Exit(1)
 	}
 }
 
-func (cli *CLI) Version() string {
-	return config.Version()
-}
-
 // Run parses command line arguments and processes commands
-func (cli *CLI) Run() {
+func (cli *Client) Run() {
 	//Defaul node port (CONST)
 	cli.NodePort = config.NodePort
 	utils.CreateDirIfNotExist(config.FilePathData)

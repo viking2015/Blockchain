@@ -3,25 +3,19 @@ package main
 import (
 	"log"
 
-	"github.com/NlaakStudios/gowaf/app"
-	// Import Application Models and Controllers here
+	cli "github.com/NlaakStudios/Blockchain/api/cli"
 )
 
-// Register holds all the Models and Controllers you wish to register for the WebApp
-func Register(a *app.App) {
-	// Register Your WebApp Specific Models below
-	a.Model.Register(
-	//&models.MyModel{},
-	)
-}
-
 func main() {
+	//cli := cli.Client{}
+	//cli.Run()
+
 	// Create a new MVC Application object
-	app, err := app.NewMVC(Version(), "./data", "webapp")
+	cli, err := cli.NewClient("./data", "blockchain")
 	if err != nil {
 		log.Fatal(err)
 	} else {
-		app.Register()           // Register Core Framework Models & Controllers
-		app.Run(Register, false) // Register WebApp Models & Controllers and Run
+		cli.Run()
 	}
+
 }

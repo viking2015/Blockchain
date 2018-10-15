@@ -8,7 +8,7 @@ import (
 )
 
 //StartNode start a new node with miner and listens on designated port
-func (cli *CLI) StartNode(nodeID, minerAddress string) {
+func (cli *Client) StartNode(nodeID, minerAddress string) {
 
 	cli.NodePort = nodeID
 	fmt.Printf("Starting node on port %s...", cli.NodePort)
