@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/NlaakStudios/Blockchain/config"
+	"github.com/NlaakStudios/Blockchain/api/config"
 	"github.com/boltdb/bolt"
 )
 

@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/Blockchain/api/utils"
 	"golang.org/x/crypto/ripemd160"
 )
 
