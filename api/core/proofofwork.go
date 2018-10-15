@@ -7,7 +7,7 @@ import (
 	"math"
 	"math/big"
 
-	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/Blockchain/api/utils"
 )
 
 var (

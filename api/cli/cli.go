@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/NlaakStudios/Blockchain/api/config"
 	"github.com/NlaakStudios/Blockchain/api/core"
-	"github.com/NlaakStudios/Blockchain/config"
-	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/Blockchain/api/utils"
 	"github.com/NlaakStudios/gowaf/logger"
 	//"os"
 )

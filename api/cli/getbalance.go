@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/NlaakStudios/Blockchain/config"
+	"github.com/NlaakStudios/Blockchain/api/config"
 	"github.com/NlaakStudios/Blockchain/api/core"
-	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/Blockchain/api/utils"
 )
 
 //ShowBalance shows the balance of the given wallet in the console

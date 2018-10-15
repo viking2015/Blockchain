@@ -5,7 +5,7 @@ import (
 	"encoding/gob"
 	"log"
 
-	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/Blockchain/api/utils"
 )
 
 // TXOutput represents a transaction output
