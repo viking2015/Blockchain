@@ -5,25 +5,129 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
-	"github.com/NlaakStudios/Blockchain/utils"
-
+	"github.com/NlaakStudios/Blockchain/api/core"
 	"github.com/NlaakStudios/Blockchain/config"
+	"github.com/NlaakStudios/Blockchain/utils"
+	"github.com/NlaakStudios/gowaf/logger"
 	//"os"
 )
 
-//CLI is the main client structure
-type CLI struct {
+//Client is the main client structure
+type Client struct {
 	NodePort string
-	CoinInfo config.CoinStruct
+	//CoinInfo     config.CoinStruct
+	Version      string
+	GoWAFVersion string
+	Config       *config.Config
+	Log          logger.Logger
+	DataFolder   string
+	ConfigName   string
+	ConfigFolder string
+	isInit       bool
+}
+
+// NewMVC creates a new MVC gowaf app. If dir is passed, it should be a directory to look for
+// all project folders (config, static, views, models, controllers, etc). The App returned is initialized.
+func NewClient(cfgDir, cfgName string) (*Client, error) {
+	cli := &Client{
+		Version: Version(),
+		Log:     logger.NewDefaultLogger(os.Stdout),
+	}
+
+	//Prepare Config Folder
+	if len(cfgDir) > 0 {
+		cli.setDataPath(cfgDir)
+	} else {
+		cli.setDataPath("./data")
+	}
+
+	//Prepare Config Name (without extension)
+	if len(cfgName) > 0 {
+		cli.ConfigName = cfgName
+	} else {
+		cli.ConfigName = "blockchain"
+	}
+
+	cli.setConfigFolder(fmt.Sprintf("%s/config", cli.DataFolder))
+
+	if cli.ConfigFolder == "" {
+		cli.setConfigFolder("config")
+	}
+
+	cli.init()
+
+	cli.printHeader()
+	return cli, nil
+}
+
+// loadConfig loads the configuration file. If cfg is provided, then it is used as the directory
+// for searching the configuration files. It defaults to the directory named config in the current
+// working directory.
+func loadConfig(name string, cfg ...string) (*config.Config, error) {
+	cfgDir := "config"
+	if len(cfg) > 0 {
+		cfgDir = cfg[0]
+	}
+
+	// Load configurations.
+	cfgFile, err := findConfigFile(cfgDir, name)
+	if err != nil {
+		return nil, err
+	}
+	return config.NewConfig(cfgFile)
+}
+
+// findConfigFile finds the configuration file name in the directory dir.
+func findConfigFile(dir string, name string) (file string, err error) {
+	extensions := []string{".json", ".toml", ".yml", ".hcl"}
+
+	for _, ext := range extensions {
+		file = filepath.Join(dir, name)
+		if info, serr := os.Stat(file); serr == nil && !info.IsDir() {
+			//TODO: Coverage -  Need to hit here
+			return
+		}
+		file = file + ext
+		if info, serr := os.Stat(file); serr == nil && !info.IsDir() {
+			return
+		}
+	}
+	return "", fmt.Errorf("gowaf: can't find configuration file %s in %s", name, dir)
+}
+
+// init initializes values to the app components.
+func (cli *Client) init() error {
+	appConfig, err := loadConfig(cli.ConfigName, cli.ConfigFolder)
+	if err != nil {
+		return err
+	}
+	cli.Config = appConfig
+	cli.isInit = true
+
+	return nil
+}
+
+// SetFixturePath sets the directory path as a base to all other folders (config, views, etc).
+func (cli *Client) setDataPath(dir string) {
+	cli.DataFolder = dir
+}
+
+// SetConfigFolder sets the directory path to search for the config files.
+func (cli *Client) setConfigFolder(dir string) {
+	cli.ConfigFolder = dir
+}
+
+//printHeader diplay commandline application header to the user.
+func (cli *Client) printHeader() {
+	fmt.Printf("%s Blockchain Version %s\n", config.CoinName, config.Version())
+	fmt.Printf("%s (%s)\n", config.CoinCompany, config.CoinLandingPage)
+	fmt.Println("-----------------------------------------------------------------------------------------")
 }
 
 //printUsage diplay commandline usage information to the user.
-func (cli *CLI) printUsage() {
-	fmt.Println("")
-	fmt.Printf("%s Daemon Version %s\n", config.CoinName, config.Version())
-	fmt.Printf("%s (%s)\n", config.CoinCompany, config.CoinLandingPage)
-	fmt.Println("-----------------------------------------------------------------------------------------")
+func (cli *Client) printUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("	createblockchain -address ADDRESS - Create a blockchain and send genesis block reward to ADDRESS")
 	fmt.Println("	createwallet - Generates a new key-pair and saves it into the wallet file")
@@ -38,33 +142,29 @@ func (cli *CLI) printUsage() {
 }
 
 //validateArgs validates the parameters passsed in via commandline
-func (cli *CLI) validateArgs() {
+func (cli *Client) validateArgs() {
 	if len(os.Args) < 2 {
 		cli.printUsage()
 		os.Exit(1)
 	}
 }
 
-func (cli *CLI) Version() string {
-	return config.Version()
-}
-
 // Run parses command line arguments and processes commands
-func (cli *CLI) Run() {
+func (cli *Client) Run() {
 	//Defaul node port (CONST)
 	cli.NodePort = config.NodePort
-	utils.CreateDirIfNotExist("data")
+	utils.CreateDirIfNotExist(config.FilePathData)
 
-	//See if blockchain file exists including data folder. If not crete folder, display notice
-	walletsFile := fmt.Sprintf(config.FilePathWallets, config.NodePort)
+	//See if blockchain file exists including data folder. If not create folder, display notice
+	walletsFile := core.GetWalletsFile(cli.NodePort)
 	if _, err := os.Stat(walletsFile); os.IsNotExist(err) {
-		println("Wallets file does not exist, use `blockchain createwallet` to create at least one wallet")
+		println("Wallets file does not exist in ", walletsFile, ", use `blockchain createwallet` to create at least one wallet")
 	}
 
 	//See if blockchain file exists including data folder. If not crete folder, display notice
-	blockchainFile := fmt.Sprintf(config.FilePathBlockchain, config.NodePort)
+	blockchainFile := core.GetBlockChainFile(cli.NodePort)
 	if _, err := os.Stat(blockchainFile); os.IsNotExist(err) {
-		println("Blockchain does not exist, use `blockchain createblockchain` to create one")
+		println("Blockchain does not exist at ", blockchainFile, ", use `blockchain createblockchain` to create one")
 	}
 
 	//Validate the command line arguments

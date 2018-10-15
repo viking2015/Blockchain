@@ -13,7 +13,6 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-//const dbFile = "./data/Blockchain_%s.db"
 const blocksBucket = "blocks"
 const genesisCoinbaseData = "Global Wealth & Freedom Genesis block."
 
@@ -23,9 +22,15 @@ type Blockchain struct {
 	DB  *bolt.DB
 }
 
+func GetBlockChainFile(nodeID string) string {
+	str := fmt.Sprintf("%s/%s", config.FilePathData, config.FilePathBlockchain)
+	return fmt.Sprintf(str, nodeID)
+}
+
 // CreateBlockchain creates a new blockchain DB
 func CreateBlockchain(address, nodeID string) *Blockchain {
-	dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
+	//dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
+	dbFile := GetBlockChainFile(nodeID)
 	if dbExists(dbFile) {
 		fmt.Println("Blockchain already exists.")
 		os.Exit(1)
@@ -72,7 +77,8 @@ func CreateBlockchain(address, nodeID string) *Blockchain {
 
 // NewBlockchain creates a new Blockchain with genesis Block
 func NewBlockchain(nodeID string) *Blockchain {
-	dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
+	//dbFile := fmt.Sprintf(config.FilePathBlockchain, nodeID)
+	dbFile := GetBlockChainFile(nodeID)
 
 	if dbExists(dbFile) == false {
 		fmt.Println("No existing blockchain found. Create one first.")

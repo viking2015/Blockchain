@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/NlaakStudios/Blockchain/core"
+	"github.com/NlaakStudios/Blockchain/api/core"
 )
 
 //Send sends an amount from one wallet to another
-func (cli *CLI) Send(from, to string, amount int, mineNow bool) {
+func (cli *Client) Send(from, to string, amount int, mineNow bool) {
 	if !core.ValidateAddress(from) {
 		log.Panic("ERROR: Sender address is not valid")
 	}
@@ -44,7 +44,7 @@ func (cli *CLI) Send(from, to string, amount int, mineNow bool) {
 }
 
 //PopulateWallets sends funds from the Master wallet to the other wallets
-func (cli *CLI) PopulateWallets(from string) {
+func (cli *Client) PopulateWallets(from string) {
 
 	fmt.Printf("Creating core wallets and funding them from wallet %s.\n", from)
 	if !core.ValidateAddress(from) {

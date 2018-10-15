@@ -3,11 +3,11 @@ package cli
 import (
 	"fmt"
 
-	"github.com/NlaakStudios/Blockchain/core"
+	"github.com/NlaakStudios/Blockchain/api/core"
 )
 
 //CreateWallet creates a new wallet address
-func (cli *CLI) CreateWallet() {
+func (cli *Client) CreateWallet() {
 	wallets, _ := core.NewWallets(cli.NodePort)
 	address := wallets.CreateWallet()
 	wallets.SaveToFile(cli.NodePort)

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/NlaakStudios/Blockchain/core"
+	"github.com/NlaakStudios/Blockchain/api/core"
 )
 
 //ListAddresses show all addresses to stdout
-func (cli *CLI) ListAddresses() {
+func (cli *Client) ListAddresses() {
 	wallets, err := core.NewWallets(cli.NodePort)
 	if err != nil {
 		log.Panic(err)

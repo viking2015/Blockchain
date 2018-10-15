@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/NlaakStudios/Blockchain/core"
+	"github.com/NlaakStudios/Blockchain/api/core"
 )
 
 //PrintChain prints the blockchain out to stdout
-func (cli *CLI) PrintChain() {
+func (cli *Client) PrintChain() {
 	bc := core.NewBlockchain(cli.NodePort)
 	defer bc.DB.Close()
 

@@ -1,8 +1,18 @@
 package main
 
-import cli "github.com/NlaakStudios/Blockchain/cli"
+import (
+	"log"
+
+	cli "github.com/NlaakStudios/Blockchain/api/cli"
+)
 
 func main() {
-	cli := cli.CLI{}
-	cli.Run()
+	// Create a new MVC Application object
+	cli, err := cli.NewClient("./data", "blockchain")
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		cli.Run()
+	}
+
 }

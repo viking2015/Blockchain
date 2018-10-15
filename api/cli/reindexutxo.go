@@ -3,11 +3,11 @@ package cli
 import (
 	"fmt"
 
-	"github.com/NlaakStudios/Blockchain/core"
+	"github.com/NlaakStudios/Blockchain/api/core"
 )
 
 //ReIndexUTXO redoes the chain index
-func (cli *CLI) ReIndexUTXO() {
+func (cli *Client) ReIndexUTXO() {
 	bc := core.NewBlockchain(cli.NodePort)
 	UTXOSet := core.UTXOSet{bc}
 	UTXOSet.Reindex()
