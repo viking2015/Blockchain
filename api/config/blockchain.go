@@ -178,7 +178,7 @@ func DefaultConfig() *Config {
 		CoinWhitePaper:     "https://www/gwf.io/%s/whitepaper",
 		CoinDashboardPage:  "https://www/gwf.io/%s/dashboard",
 		CoinAPI:            "https://www/gwf.io/api/%s/%s",
-		FilePathData:       "../data",
+		FilePathData:       "./data",
 		FilePathBlockchain: "blockchain/blockchain-%s.db",
 		FilePathWallets:    "blockchain/wallets-%s.dat",
 	}
