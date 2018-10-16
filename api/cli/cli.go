@@ -7,9 +7,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/NlaakStudios/Blockchain/api/config"
-	"github.com/NlaakStudios/Blockchain/api/core"
 	"github.com/NlaakStudios/Blockchain/api/utils"
+
+	"github.com/NlaakStudios/Blockchain/api/core"
+
+	"github.com/NlaakStudios/Blockchain/api/config"
 	"github.com/NlaakStudios/gowaf/logger"
 	//"os"
 )
@@ -104,6 +106,16 @@ func (cli *Client) init() error {
 		return err
 	}
 	cli.Config = appConfig
+
+	//Defaul node port (CONST)
+	cli.NodePort = config.NodePort
+	utils.CreateDirIfNotExist(config.FilePathData)
+
+	//Validate the command line arguments
+	cli.validateArgs()
+
+	cli.initMasterWallet()
+
 	cli.isInit = true
 
 	return nil
@@ -145,30 +157,47 @@ func (cli *Client) printUsage() {
 func (cli *Client) validateArgs() {
 	if len(os.Args) < 2 {
 		cli.printUsage()
-		os.Exit(1)
+		cli.terminate()
 	}
 }
 
-// Run parses command line arguments and processes commands
-func (cli *Client) Run() {
-	//Defaul node port (CONST)
-	cli.NodePort = config.NodePort
-	utils.CreateDirIfNotExist(config.FilePathData)
+//validateArgs validates the parameters passsed in via commandline
+func (cli *Client) terminate() {
+	println("Exited.")
+	os.Exit(1)
+}
 
+func (cli *Client) initMasterWallet() {
 	//See if blockchain file exists including data folder. If not create folder, display notice
 	walletsFile := core.GetWalletsFile(cli.NodePort)
 	if _, err := os.Stat(walletsFile); os.IsNotExist(err) {
 		println("Wallets file does not exist in ", walletsFile, ", use `blockchain createwallet` to create at least one wallet")
+		//cli.terminate()
+		cli.cmdCreateWallet()
 	}
+
+}
+
+func (cli *Client) initBlockchain() {
 
 	//See if blockchain file exists including data folder. If not crete folder, display notice
 	blockchainFile := core.GetBlockChainFile(cli.NodePort)
 	if _, err := os.Stat(blockchainFile); os.IsNotExist(err) {
 		println("Blockchain does not exist at ", blockchainFile, ", use `blockchain createblockchain` to create one")
+		cli.terminate()
 	}
 
-	//Validate the command line arguments
-	cli.validateArgs()
+}
+func (cli *Client) cmdCreateWallet() {
+	createWalletCmd := flag.NewFlagSet("createwallet", flag.ExitOnError)
+	err := createWalletCmd.Parse(os.Args[2:])
+	if err != nil {
+		cli.Log.Errors(err)
+	}
+}
+
+// Run parses command line arguments and processes commands
+func (cli *Client) Run() {
 
 	getBalanceCmd := flag.NewFlagSet("getbalance", flag.ExitOnError)
 	createBlockchainCmd := flag.NewFlagSet("createblockchain", flag.ExitOnError)
@@ -199,11 +228,13 @@ func (cli *Client) Run() {
 		if err != nil {
 			log.Panic(err)
 		}
+	//case "createwallet":
+	//	err := createWalletCmd.Parse(os.Args[2:])
+	//	if err != nil {
+	//		log.Panic(err)
+	//	}
 	case "createwallet":
-		err := createWalletCmd.Parse(os.Args[2:])
-		if err != nil {
-			log.Panic(err)
-		}
+		cli.cmdCreateWallet()
 	case "listaddresses":
 		err := listAddressesCmd.Parse(os.Args[2:])
 		if err != nil {
@@ -236,7 +267,7 @@ func (cli *Client) Run() {
 		}
 	default:
 		cli.printUsage()
-		os.Exit(1)
+		cli.terminate()
 	}
 
 	if getBalanceCmd.Parsed() {
